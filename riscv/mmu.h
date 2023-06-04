@@ -69,7 +69,7 @@ class mmu_t
 private:
   std::map<reg_t, reg_t> alloc_cache;
   std::vector<std::pair<reg_t, reg_t >> addr_tbl;
-
+public:
   mem_access_info_t generate_access_info(reg_t addr, access_type type, xlate_flags_t xlate_flags) {
     if (!proc)
       return {addr, 0, false, {false, false, false}, type};
@@ -88,7 +88,7 @@ private:
     }
     return {addr, mode, virt, xlate_flags, type};
   }
-
+private:
 public:
   mmu_t(simif_t* sim, endianness_t endianness, processor_t* proc);
   ~mmu_t();
@@ -392,8 +392,9 @@ private:
   bool mmio(reg_t paddr, size_t len, uint8_t* bytes, access_type type);
   bool mmio_ok(reg_t paddr, access_type type);
   void check_triggers(triggers::operation_t operation, reg_t address, bool virt, std::optional<reg_t> data = std::nullopt);
+public:
   reg_t translate(mem_access_info_t access_info, reg_t len);
-
+private:
   reg_t pte_load(reg_t pte_paddr, reg_t addr, bool virt, access_type trap_type, size_t ptesize) {
     if (ptesize == 4)
       return pte_load<uint32_t>(pte_paddr, addr, virt, trap_type);

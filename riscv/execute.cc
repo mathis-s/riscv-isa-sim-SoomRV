@@ -62,6 +62,7 @@ static void commit_log_print_value(FILE *log_file, int width, uint64_t val)
 
 static void commit_log_print_insn(processor_t *p, reg_t pc, insn_t insn)
 {
+  return;
   FILE *log_file = p->get_log_file();
 
   auto& reg = p->get_state()->log_reg_write;
