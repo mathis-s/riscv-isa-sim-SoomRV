@@ -821,7 +821,7 @@ void processor_t::take_trap(trap_t& t, reg_t epc)
     state.pc = (state.nonvirtual_stvec->read() & ~(reg_t)1) + vector;
     state.nonvirtual_scause->write(t.cause());
     state.nonvirtual_sepc->write(epc);
-    state.nonvirtual_stval->write(t.get_tval());
+    state.nonvirtual_stval->write((!interrupt && t.cause() == 2) ? 0 : t.get_tval());
     state.htval->write(t.get_tval2());
     state.htinst->write(t.get_tinst());
 
@@ -850,7 +850,7 @@ void processor_t::take_trap(trap_t& t, reg_t epc)
     state.pc = !nmie ? rnmi_trap_handler_address : trap_handler_address;
     state.mepc->write(epc);
     state.mcause->write(t.cause());
-    state.mtval->write(t.get_tval());
+    state.mtval->write((!interrupt && t.cause() == 2) ? 0 : t.get_tval());
     state.mtval2->write(t.get_tval2());
     state.mtinst->write(t.get_tinst());
 
