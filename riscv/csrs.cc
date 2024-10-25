@@ -374,7 +374,7 @@ reg_t tvec_csr_t::read() const noexcept {
 }
 
 bool tvec_csr_t::unlogged_write(const reg_t val) noexcept {
-  this->val = val & ~(reg_t)2;
+  this->val = val & ~(reg_t)3;
   return true;
 }
 
@@ -879,7 +879,7 @@ bool medeleg_csr_t::unlogged_write(const reg_t val) noexcept {
     | (1 << CAUSE_BREAKPOINT)
     | (1 << CAUSE_MISALIGNED_LOAD)
     | (1 << CAUSE_LOAD_ACCESS)
-    | (1 << CAUSE_MISALIGNED_STORE) 
+    | (1 << CAUSE_MISALIGNED_STORE)
     | (1 << CAUSE_STORE_ACCESS)
     | (1 << CAUSE_USER_ECALL)
     | (1 << CAUSE_SUPERVISOR_ECALL)
